@@ -3,3 +3,6 @@
 <p>
   This is a beautiful website to create, view and manage all your tasks.
 </p>
+<p>
+  For this project I used tools and resources like: icons, style structures, guides and other things that helped me build a beautiful product.
+</p>
