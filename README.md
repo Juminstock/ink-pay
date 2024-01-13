@@ -1,1 +1,1 @@
-<h1 align="center"> <img src="https://aave.com/aaveGhost.svg" width="30"> Boomie dApp</h1>
+<h1 align="center"> <img src="https://aave.com/aaveGhost.svg" width="20"> Boomie dApp</h1>
