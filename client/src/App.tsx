@@ -1,34 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { WagmiConfig, createConfig } from 'wagmi'
+import { ConnectKitProvider, getDefaultConfig } from 'connectkit'
+import { Nav } from '@/components/layout'
 
-function App() {
-  const [count, setCount] = useState(0)
+const config = createConfig(
+  getDefaultConfig({
+    infuraId: import.meta.env.VITE_ALCHEMY_ID,
+    walletConnectProjectId: import.meta.env
+      .VITE_WALLETCONNECT_PROJECT_ID as string,
 
+    appName: 'Boomie',
+
+    appDescription: 'Your App Description',
+    appUrl: 'https://family.co', // your app's url
+    appIcon: 'https://family.co/logo.png' // your app's icon, no bigger than 1024x1024px (max. 1MB)
+  })
+)
+
+function App () {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <WagmiConfig config={config}>
+      <ConnectKitProvider>
+        <main className='min-h-screen'>
+          <Nav />
+          Hello world
+        </main>
+      </ConnectKitProvider>
+    </WagmiConfig>
   )
 }
 
