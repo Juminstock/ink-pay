@@ -1,4 +1,5 @@
 import { BoomieRampABI } from '@/lib/contracts/BoomieRampABI';
+import { parseEther } from 'viem';
 import {
   useContractRead,
   useContractWrite,
@@ -7,12 +8,11 @@ import {
 } from 'wagmi';
 
 const boomieRampContract =
-  (import.meta.env.VITE_BOOMIE_RAMP_CONTRACT_SEPOLIA as `0x${string}`) ?? '';
-
-const decimals = 10e18;
+  (import.meta.env.VITE_BOOMIE_RAMP_CONTRACT_SEPOLIA as `0x${string}`) ??
+  '0xd73ee34ebaeC74e1f86546D12FB597F962F44680';
 
 export const useSignalIntent = (
-  depositId: `0x${string}`,
+  depositId: number,
   amount: number,
   to: `0x${string}`
 ) => {
@@ -24,14 +24,12 @@ export const useSignalIntent = (
     address: boomieRampContract,
     abi: BoomieRampABI,
     functionName: 'signalIntent',
-    args: [depositId, BigInt(amount * decimals), to],
+    args: [depositId, parseEther(amount.toString()), to],
     onSettled(data, error) {
       console.log('Settled Prepare signalIntent:', { data, error });
     },
   });
 
-
-  console.debug([depositId, BigInt(amount * decimals), to])
   const {
     data: signalIntentData,
     error: signalIntentError,
