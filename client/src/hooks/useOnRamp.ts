@@ -1,12 +1,12 @@
-import { BoomieRampABI } from "@/lib/contracts/BoomieRampABI";
+import { BoomieRampABI } from '@/lib/contracts/BoomieRampABI';
 import {
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
-} from "wagmi";
+} from 'wagmi';
 
 const boomieRampContract =
-  (import.meta.env.VITE_BOOMIE_RAMP_TOKEN_SEPOLIA as `0x${string}`) ?? "";
+  (import.meta.env.VITE_BOOMIE_RAMP_CONTRACT_SEPOLIA as `0x${string}`) ?? '';
 
 export const useOnRamp = (intentId: number) => {
   const {
@@ -16,10 +16,10 @@ export const useOnRamp = (intentId: number) => {
   } = usePrepareContractWrite({
     address: boomieRampContract,
     abi: BoomieRampABI,
-    functionName: "onRamp",
+    functionName: 'onRamp',
     args: [BigInt(intentId)],
     onSettled(data, error) {
-      console.log("Settled Prepare onRamp:", { data, error });
+      console.log('Settled Prepare onRamp:', { data, error });
     },
   });
 
@@ -32,7 +32,7 @@ export const useOnRamp = (intentId: number) => {
   } = useContractWrite({
     ...config,
     onSettled(data, error) {
-      console.log("Settled onRamp:", { data, error });
+      console.log('Settled onRamp:', { data, error });
     },
   });
 

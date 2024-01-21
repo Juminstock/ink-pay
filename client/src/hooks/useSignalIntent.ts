@@ -1,12 +1,12 @@
-import { BoomieRampABI } from "@/lib/contracts/BoomieRampABI";
+import { BoomieRampABI } from '@/lib/contracts/BoomieRampABI';
 import {
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
-} from "wagmi";
+} from 'wagmi';
 
 const boomieRampContract =
-  (import.meta.env.VITE_BOOMIE_RAMP_TOKEN_SEPOLIA as `0x${string}`) ?? "";
+  (import.meta.env.VITE_BOOMIE_RAMP_CONTRACT_SEPOLIA as `0x${string}`) ?? '';
 
 const decimals = 10e18;
 
@@ -22,10 +22,10 @@ export const useSignalIntent = (
   } = usePrepareContractWrite({
     address: boomieRampContract,
     abi: BoomieRampABI,
-    functionName: "signalIntent",
+    functionName: 'signalIntent',
     args: [depositId, BigInt(amount * decimals), to],
     onSettled(data, error) {
-      console.log("Settled Prepare signalIntent:", { data, error });
+      console.log('Settled Prepare signalIntent:', { data, error });
     },
   });
 
@@ -38,7 +38,7 @@ export const useSignalIntent = (
   } = useContractWrite({
     ...config,
     onSettled(data, error) {
-      console.log("Settled signalIntent:", { data, error });
+      console.log('Settled signalIntent:', { data, error });
     },
   });
 
