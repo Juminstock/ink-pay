@@ -10,22 +10,17 @@ function Nav () {
   return (
     <Navbar className='fixed' >
       <NavbarBrand>
-        <p className='font-bold text-inherit'>BOOMIE</p>
+        <Link href='/' className='font-bold text-inherit'>BOOMIE</Link>
       </NavbarBrand>
       <NavbarContent className='hidden sm:flex gap-4' justify='center'>
         <NavbarItem>
-          <Link color='foreground' href='#'>
-            Features
+          <Link color='foreground' href='/user-panel'>
+            Panel de usuario
           </Link>
         </NavbarItem>
         <NavbarItem isActive>
-          <Link href='#' aria-current='page'>
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color='foreground' href='#'>
-            Integrations
+          <Link href='make-deposit' aria-current='page'>
+            Crear ordenenes
           </Link>
         </NavbarItem>
       </NavbarContent>

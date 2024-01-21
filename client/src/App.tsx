@@ -2,7 +2,7 @@ import { WagmiConfig, createConfig } from 'wagmi'
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit'
 import { mainnet, goerli, sepolia } from 'wagmi/chains'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { Home, MakeIntent } from './views'
+import { Home, MakeIntent, UserPanel } from './views'
 import { ToastContainer } from 'react-toastify'
 import { Layout } from './components'
 import { MakeDeposit } from './views/MakeDeposit'
@@ -39,6 +39,10 @@ function App () {
         {
           path: '/make-deposit',
           element: <MakeDeposit />
+        },
+        {
+          path: '/user-panel',
+          element: <UserPanel />
         }
       ]
     }
