@@ -2,7 +2,8 @@ import { WagmiConfig, createConfig } from 'wagmi'
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit'
 import { mainnet, goerli, sepolia } from 'wagmi/chains'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { Home, OnRamp } from './views'
+import { Home, MakeIntent } from './views'
+import { ToastContainer } from 'react-toastify'
 import { Layout } from './components'
 const chains = [mainnet, goerli, sepolia]
 const config = createConfig(
@@ -31,8 +32,8 @@ function App () {
           element: <Home />
         },
         {
-          path: '/onRamp/:makerAddress',
-          element: <OnRamp />
+          path: '/make-intent/:depositId',
+          element: <MakeIntent />
         }
       ]
     }
@@ -42,9 +43,7 @@ function App () {
     <WagmiConfig config={config}>
       <ConnectKitProvider>
         <RouterProvider router={router} />
-        {/* <main className='h-screen'>
-          <Nav />
-        </main> */}
+        <ToastContainer />
       </ConnectKitProvider>
     </WagmiConfig>
   )

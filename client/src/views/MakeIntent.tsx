@@ -1,3 +1,4 @@
+import { useSignalIntent } from '@/hooks'
 import {
   Button,
   Card,
@@ -6,25 +7,74 @@ import {
   CardHeader,
   Input
 } from '@nextui-org/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 function mockHookOnRamp () {
   return { orders: 687, pricing: 17.75, totalGHO: 673 }
 }
-
-function OnRamp () {
-  const [currentGHOValue, setCurrentGHOValue] = useState<string | undefined>(
-    undefined
-  )
+type CurrentValues = {
+  currentMXNValue: number
+  currentGHOValue: number
+}
+const MockAddress = '0x34107Bce5EC357cE31739B84454c2c555a677568'
+function MakeIntent () {
+  const [currentValues, setCurrentValues] = useState<CurrentValues>({
+    currentMXNValue: 0,
+    currentGHOValue: 0
+  })
   const navigate = useNavigate()
-  const { makerAddress } = useParams()
+  const { depositId } = useParams()
   const { orders, pricing, totalGHO } = mockHookOnRamp()
-
-  const handleOnGHOChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const {
+    signalIntentWrite,
+    isSignalIntentError,
+    isSignalIntentTxnSuccess,
+    isLoadingSignalIntentTxn,
+    isPrepareSignalIntentError
+  } = useSignalIntent(
+    depositId as `0x${string}`,
+    currentValues.currentGHOValue as number,
+    MockAddress
+  )
+  const handleOnMXNChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
-    setCurrentGHOValue(value ? (Number(value) / pricing).toString() : undefined)
+    setCurrentValues({
+      ...currentValues,
+      currentMXNValue: Number(value),
+      currentGHOValue: Number(value) / pricing
+    })
   }
+
+  const handleOnMakeOrder = () => {
+    signalIntentWrite?.()
+  }
+
+  useEffect(() => {
+    if (isLoadingSignalIntentTxn) {
+      toast.loading('Procesando transacción', {
+        toastId: 'signal-intent-txn',
+        isLoading: true
+      })
+    }
+    if (isSignalIntentError) {
+      toast.update('signal-intent-txn', {
+        type: 'error',
+        isLoading: false,
+        render: 'Error al procesar la transacción'
+      })
+      if (isSignalIntentTxnSuccess) {
+        toast.update('signal-intent-txn', {
+          type: 'success',
+          isLoading: false,
+          render: 'Transacción exitosa'
+        })
+      }
+    }
+  }, [isSignalIntentError, isSignalIntentTxnSuccess, isLoadingSignalIntentTxn])
+
+  console.debug(isPrepareSignalIntentError)
 
   return (
     <main className='flex flex-col justify-center min-h-screen gap-5 items-center'>
@@ -33,7 +83,9 @@ function OnRamp () {
         <CardHeader className='flex flex-col gap-4 justify-center items-center'>
           <div className=' w-full flex flex-row gap-4 justify-center items-center'>
             <div className=' h-2 w-2 bg-blue-900 rounded-full' />
-            <p className='text-lg font-bold'>{makerAddress}</p>
+            <p className='text-lg font-bold'>
+              0x34107Bce5EC357cE31739B84454c2c555a677568
+            </p>
           </div>
           <div className='w-full flex flex-row justify-center gap-10 items-start'>
             <p className='font-semibold text-3xl'>{orders} Ordenes</p>
@@ -50,7 +102,7 @@ function OnRamp () {
             inputMode='numeric'
             label='Quiero pagar'
             placeholder='0.00'
-            onChange={handleOnGHOChange}
+            onChange={handleOnMXNChange}
             endContent={
               <div className='h-full flex justify-center items-center'>
                 <p>MXN</p>
@@ -59,7 +111,11 @@ function OnRamp () {
           />
           <Input
             disabled
-            value={currentGHOValue ? currentGHOValue : undefined}
+            value={
+              currentValues.currentGHOValue
+                ? currentValues.currentGHOValue.toString()
+                : undefined
+            }
             label='Recibire'
             placeholder='0.00'
             type='number'
@@ -79,7 +135,9 @@ function OnRamp () {
             Cancelar
           </Button>
           <Button
-            className='py-6 w-full bg-main text-white font-bold'
+            disabled={isPrepareSignalIntentError || !signalIntentWrite}
+            onClick={handleOnMakeOrder}
+            className={`${(isPrepareSignalIntentError || !signalIntentWrite) ? 'bg-gray-400' :'bg-main'} py-6 w-full  text-white font-bold`}
             color='success'
           >
             Comprar
@@ -90,4 +148,4 @@ function OnRamp () {
   )
 }
 
-export { OnRamp }
+export { MakeIntent }
