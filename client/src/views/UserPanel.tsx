@@ -2,12 +2,6 @@ import { BuyOrders } from '@/components'
 import { SellOrders } from '@/components/SellOrders'
 import {
   Tab,
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
   Tabs
 } from '@nextui-org/react'
 

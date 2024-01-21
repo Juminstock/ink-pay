@@ -18,7 +18,7 @@ type CurrentValues = {
   currentMXNValue: number
   currentGHOValue: number
 }
-const MockAddress = '0x34107Bce5EC357cE31739B84454c2c555a677568'
+const MockAddress = '0x04A3961bB66cB3DE67d55EEAbB66D0A38558C5F2'
 function MakeIntent () {
   const [currentValues, setCurrentValues] = useState<CurrentValues>({
     currentMXNValue: 0,
@@ -34,7 +34,7 @@ function MakeIntent () {
     isLoadingSignalIntentTxn,
     isPrepareSignalIntentError
   } = useSignalIntent(
-    depositId as `0x${string}`,
+    `0x${depositId}`,
     currentValues.currentGHOValue as number,
     MockAddress
   )

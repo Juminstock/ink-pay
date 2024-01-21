@@ -30,6 +30,8 @@ export const useSignalIntent = (
     },
   });
 
+
+  console.debug([depositId, BigInt(amount * decimals), to])
   const {
     data: signalIntentData,
     error: signalIntentError,
