@@ -154,7 +154,7 @@ function Home() {
     return (getDepositsWithMinimumBalanceData as Deposit[])
       .map((deposit) => {
         return {
-          id: parseInt(formatEther(deposit.depositId as bigint)),
+          id: deposit.depositId as bigint,
           depositor: deposit.depositor,
           depositAmount: parseInt(formatEther(deposit.depositAmount)),
           remainingDeposits: parseInt(formatEther(deposit.remainingDeposits)),
