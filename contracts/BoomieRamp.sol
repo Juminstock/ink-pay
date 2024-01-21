@@ -1,5 +1,9 @@
-// //SPDX-License-Identifier: MIT
-// pragma solidity ^0.8.18;
+// SPDX-License-Identifier: MIT
+
+pragma solidity ^0.8.18;
+
+// // Useful for debugging. Remove when deploying to a live network.
+// import "hardhat/console.sol";
 
 // import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 // import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
@@ -7,6 +11,11 @@
 // import { Bytes32ArrayUtils } from "./external/Bytes32ArrayUtils.sol";
 // import { Uint256ArrayUtils } from "./external/Uint256ArrayUtils.sol";
 
+// /**
+//  * A smart contract that allows changing a state variable of the contract and tracking the changes
+//  * It also allows the owner to withdraw the Ether in the contract
+//  * @author BuidlGuidl
+//  */
 // contract BoomieRamp is Ownable {
 // 	using Bytes32ArrayUtils for bytes32[];
 // 	using Uint256ArrayUtils for uint256[];
@@ -67,6 +76,7 @@
 // 	}
 
 // 	struct Deposit {
+// 		uint256 depositId;
 // 		address depositor;
 // 		uint256 depositAmount; // Amount of GHO deposited
 // 		uint256 remainingDeposits; // Amount of remaining deposited liquidity
@@ -144,6 +154,7 @@
 // 	uint256 public sustainabilityFee; // Fee charged to on-rampers in preciseUnits (1e16 = 1%)
 // 	address public sustainabilityFeeRecipient; // Address that receives the sustainability fee
 
+// 	Deposit[] public allDeposits;
 // 	uint256 public depositCounter; // Counter for depositIds
 
 // 	/* ============ Constructor ============ */
@@ -164,6 +175,7 @@
 // 		onRampCooldownPeriod = _onRampCooldownPeriod;
 // 		sustainabilityFee = _sustainabilityFee;
 // 		sustainabilityFeeRecipient = _sustainabilityFeeRecipient;
+// 		isInitialized = true;
 
 // 		transferOwnership(_owner);
 // 	}
@@ -204,10 +216,7 @@
 // 	 * @param _depositAmount    The amount of GHO to off-ramp
 // 	 * @param _receiveAmount    The amount of XOC to receive
 // 	 */
-// 	function offRamp(
-// 		uint256 _depositAmount,
-// 		uint256 _receiveAmount
-// 	) external onlyRegisteredUser {
+// 	function offRamp(uint256 _depositAmount, uint256 _receiveAmount) external {
 // 		require(
 // 			accounts[msg.sender].deposits.length < MAX_DEPOSITS,
 // 			"Maximum deposit amount reached"
@@ -218,13 +227,14 @@
 // 		);
 // 		require(_receiveAmount > 0, "Receive amount must be greater than 0");
 
-// 		uint256 conversionRate = (_depositAmount * PRECISE_UNIT) /
-// 			_receiveAmount;
+// 		uint256 conversionRate = (_receiveAmount * PRECISE_UNIT) /
+// 			_depositAmount;
 // 		uint256 depositId = depositCounter++;
 
 // 		accounts[msg.sender].deposits.push(depositId);
 
 // 		deposits[depositId] = Deposit({
+// 			depositId: depositId,
 // 			depositor: msg.sender,
 // 			depositAmount: _depositAmount,
 // 			remainingDeposits: _depositAmount,
@@ -232,6 +242,18 @@
 // 			conversionRate: conversionRate,
 // 			intentHashes: new bytes32[](0)
 // 		});
+
+// 		allDeposits.push(
+// 			Deposit({
+// 				depositId: depositId,
+// 				depositor: msg.sender,
+// 				depositAmount: _depositAmount,
+// 				remainingDeposits: _depositAmount,
+// 				outstandingIntentAmount: 0,
+// 				conversionRate: conversionRate,
+// 				intentHashes: new bytes32[](0)
+// 			})
+// 		);
 
 // 		gho.transferFrom(msg.sender, address(this), _depositAmount);
 
@@ -261,7 +283,7 @@
 // 		uint256 _depositId,
 // 		uint256 _amount,
 // 		address _to
-// 	) external onlyRegisteredUser {
+// 	) external {
 // 		bytes32 venmoIdHash = getAccountVenmoIdHash(msg.sender);
 // 		Deposit storage deposit = deposits[_depositId];
 // 		bytes32 depositorVenmoIdHash = getAccountVenmoIdHash(deposit.depositor);
@@ -375,6 +397,11 @@
 // 		Intent memory intent = intents[_intentHash];
 // 		Deposit storage deposit = deposits[intent.deposit];
 
+// 		require(
+// 			deposit.depositor == msg.sender,
+// 			"Caller must be the depositor"
+// 		);
+
 // 		_pruneIntent(deposit, _intentHash);
 
 // 		deposit.outstandingIntentAmount -= intent.amount;
@@ -461,9 +488,7 @@
 // 	 *
 // 	 * @param _deniedUser   Poseidon hash of the venmoId being banned
 // 	 */
-// 	function addAccountToDenylist(
-// 		bytes32 _deniedUser
-// 	) external onlyRegisteredUser {
+// 	function addAccountToDenylist(bytes32 _deniedUser) external {
 // 		bytes32 denyingUser = getAccountVenmoIdHash(msg.sender);
 
 // 		require(
@@ -483,9 +508,7 @@
 // 	 *
 // 	 * @param _approvedUser   Poseidon hash of the venmoId being approved
 // 	 */
-// 	function removeAccountFromDenylist(
-// 		bytes32 _approvedUser
-// 	) external onlyRegisteredUser {
+// 	function removeAccountFromDenylist(bytes32 _approvedUser) external {
 // 		bytes32 approvingUser = getAccountVenmoIdHash(msg.sender);
 
 // 		require(
@@ -592,6 +615,38 @@
 // 	}
 
 // 	/* ============ External View Functions ============ */
+
+// 	/**
+// 	 * @notice View function to get all Deposits with a remainingDeposits balance larger than 25
+// 	 */
+// 	function getDepositsWithMinimumBalance()
+// 		external
+// 		view
+// 		returns (Deposit[] memory)
+// 	{
+// 		uint256 count = 0;
+
+// 		// First, determine the number of deposits that meet the criteria
+// 		for (uint256 i = 0; i < allDeposits.length; i++) {
+// 			if (allDeposits[i].remainingDeposits >= 25 * PRECISE_UNIT) {
+// 				count++;
+// 			}
+// 		}
+
+// 		// Initialize an array to hold qualifying Deposits
+// 		Deposit[] memory qualifyingDeposits = new Deposit[](count);
+// 		uint256 index = 0;
+
+// 		// Populate the array with Deposits that meet the criteria
+// 		for (uint256 i = 0; i < allDeposits.length; i++) {
+// 			if (allDeposits[i].remainingDeposits >= 25 * PRECISE_UNIT) {
+// 				qualifyingDeposits[index] = allDeposits[i];
+// 				index++;
+// 			}
+// 		}
+
+// 		return qualifyingDeposits;
+// 	}
 
 // 	function getDeposit(
 // 		uint256 _depositId
