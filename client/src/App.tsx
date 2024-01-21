@@ -5,6 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Home, MakeIntent } from './views'
 import { ToastContainer } from 'react-toastify'
 import { Layout } from './components'
+import { MakeDeposit } from './views/MakeDeposit'
 const chains = [mainnet, goerli, sepolia]
 const config = createConfig(
   getDefaultConfig({
@@ -34,6 +35,10 @@ function App () {
         {
           path: '/make-intent/:depositId',
           element: <MakeIntent />
+        },
+        {
+          path: '/make-deposit',
+          element: <MakeDeposit />
         }
       ]
     }
