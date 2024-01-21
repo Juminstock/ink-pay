@@ -9,11 +9,8 @@ import {
   Pagination,
   Spinner,
   getKeyValue,
-  Card,
-  CardBody,
   Button
 } from '@nextui-org/react'
-import { useAsyncList } from '@react-stately/data'
 import { useNavigate } from 'react-router-dom'
 
 const mockData = [
@@ -168,7 +165,7 @@ function Home () {
           </TableColumn>
           <TableColumn key='action'>ACCIÓN</TableColumn>
         </TableHeader>
-        <TableBody items={items} loadingContent={<Spinner color='black' />}>
+        <TableBody items={items} loadingContent={<Spinner />}>
           {item => (
             <TableRow key={item.id} accessKey={item.id.toString()}>
               {columnKey => {
