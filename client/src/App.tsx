@@ -1,7 +1,9 @@
 import { WagmiConfig, createConfig } from 'wagmi'
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit'
-import { Nav } from '@/components/layout'
 import { mainnet, goerli, sepolia } from 'wagmi/chains'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { Home } from './views'
+import { Layout } from './components'
 const chains = [mainnet, goerli, sepolia]
 const config = createConfig(
   getDefaultConfig({
@@ -19,12 +21,26 @@ const config = createConfig(
 )
 
 function App () {
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Layout />,
+      children: [
+        {
+          path: '/',
+          element: <Home />
+        }
+      ]
+    }
+  ])
+
   return (
     <WagmiConfig config={config}>
       <ConnectKitProvider>
-        <main className='h-screen'>
+        <RouterProvider router={router} />
+        {/* <main className='h-screen'>
           <Nav />
-        </main>
+        </main> */}
       </ConnectKitProvider>
     </WagmiConfig>
   )
