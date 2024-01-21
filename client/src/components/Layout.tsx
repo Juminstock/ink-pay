@@ -3,7 +3,7 @@ import { Nav } from '@/components/layout/'
 
 function Layout () {
   return (
-    <div className='bg-neutral-300'>
+    <div className='text-krub bg-main-bg min-h-screen'>
       <Nav />
       <Outlet />
     </div>

@@ -8,7 +8,7 @@ import {
 import { ConnectKitButton } from 'connectkit'
 function Nav () {
   return (
-    <Navbar shouldHideOnScroll className='bg-slate-500'>
+    <Navbar className='fixed' >
       <NavbarBrand>
         <p className='font-bold text-inherit'>BOOMIE</p>
       </NavbarBrand>
