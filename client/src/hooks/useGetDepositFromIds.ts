@@ -6,7 +6,7 @@ import {
 } from 'wagmi';
 
 const boomieRampContract =
-  (import.meta.env.VITE_BOOMIE_RAMP_TOKEN_SEPOLIA as `0x${string}`) ?? '';
+  (import.meta.env.VITE_BOOMIE_RAMP_CONTRACT_SEPOLIA as `0x${string}`) ?? '';
 
 export const useGetDepositFromIds = (depositIds: `0x${string}`[]) => {
   const {

@@ -1,12 +1,12 @@
-import { BoomieRampABI } from "@/lib/contracts/BoomieRampABI";
+import { BoomieRampABI } from '@/lib/contracts/BoomieRampABI';
 import {
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction,
-} from "wagmi";
+} from 'wagmi';
 
 const boomieRampContract =
-  (import.meta.env.VITE_BOOMIE_RAMP_TOKEN_SEPOLIA as `0x${string}`) ?? "";
+  (import.meta.env.VITE_BOOMIE_RAMP_CONTRACT_SEPOLIA as `0x${string}`) ?? '';
 
 export const useCancelIntent = (depositId: `0x${string}`) => {
   const {
@@ -16,10 +16,10 @@ export const useCancelIntent = (depositId: `0x${string}`) => {
   } = usePrepareContractWrite({
     address: boomieRampContract,
     abi: BoomieRampABI,
-    functionName: "cancelIntent",
+    functionName: 'cancelIntent',
     args: [depositId],
     onSettled(data, error) {
-      console.log("Settled Prepare cancelIntent:", { data, error });
+      console.log('Settled Prepare cancelIntent:', { data, error });
     },
   });
 
@@ -32,7 +32,7 @@ export const useCancelIntent = (depositId: `0x${string}`) => {
   } = useContractWrite({
     ...config,
     onSettled(data, error) {
-      console.log("Settled cancelIntent:", { data, error });
+      console.log('Settled cancelIntent:', { data, error });
     },
   });
 
