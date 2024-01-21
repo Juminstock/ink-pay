@@ -42,7 +42,7 @@ function MakeIntent() {
   } = useSignalIntent(
     parseInt(depositId as string),
     currentValues.currentGHOValue as number,
-    MockAddress
+    MockAddress as `0x${string}`
   );
   const handleOnMXNChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -83,6 +83,7 @@ function MakeIntent() {
     }
   }, [isSignalIntentError, isSignalIntentTxnSuccess, isLoadingSignalIntentTxn]);
 
+  console.log(isPrepareSignalIntentError);
   console.debug(isPrepareSignalIntentError);
 
   return (
@@ -152,12 +153,10 @@ function MakeIntent() {
             Cancelar
           </Button>
           <Button
-            disabled={isPrepareSignalIntentError || !signalIntentWrite}
+            disabled={isPrepareSignalIntentError}
             onClick={handleOnMakeOrder}
             className={`${
-              isPrepareSignalIntentError || !signalIntentWrite
-                ? 'bg-gray-400'
-                : 'bg-main'
+              isPrepareSignalIntentError ? 'bg-gray-400' : 'bg-main'
             } py-6 w-full  text-white font-bold`}
             color="success"
           >

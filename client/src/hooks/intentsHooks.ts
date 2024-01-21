@@ -8,8 +8,7 @@ import {
 } from 'wagmi';
 
 const boomieRampContract =
-  (import.meta.env.VITE_BOOMIE_RAMP_CONTRACT_SEPOLIA as `0x${string}`) ??
-  '0xd73ee34ebaeC74e1f86546D12FB597F962F44680';
+  '0xd73ee34ebaeC74e1f86546D12FB597F962F44680' as `0x${string}`;
 
 export const useSignalIntent = (
   depositId: number,
