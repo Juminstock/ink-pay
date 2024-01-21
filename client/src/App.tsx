@@ -2,7 +2,7 @@ import { WagmiConfig, createConfig } from 'wagmi'
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit'
 import { mainnet, goerli, sepolia } from 'wagmi/chains'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import { Home } from './views'
+import { Home, OnRamp } from './views'
 import { Layout } from './components'
 const chains = [mainnet, goerli, sepolia]
 const config = createConfig(
@@ -29,6 +29,10 @@ function App () {
         {
           path: '/',
           element: <Home />
+        },
+        {
+          path: '/onRamp/:makerAddress',
+          element: <OnRamp />
         }
       ]
     }
