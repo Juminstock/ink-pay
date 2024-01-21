@@ -174,12 +174,19 @@ function Home () {
                     <TableCell>
                       <Button
                         onClick={() => handleOnClickButton(item.id)}
-                        className='bg-main text-white font-bold'
+                        className='w-full bg-main text-white font-bold'
                       >
                         Comprar
                       </Button>
                     </TableCell>
                   )
+                }
+                if (columnKey === 'conversionRate') {
+                  return <TableCell>${item[columnKey]} MXN</TableCell>
+                }
+
+                if (columnKey === 'remainingDeposits') {
+                  return <TableCell>{item[columnKey]} GHO</TableCell>
                 }
 
                 return <TableCell>{getKeyValue(item, columnKey)}</TableCell>

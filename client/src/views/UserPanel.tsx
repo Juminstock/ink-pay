@@ -1,15 +1,25 @@
-import { Tab, Tabs } from '@nextui-org/react'
-import React from 'react'
+import { BuyOrders } from '@/components'
+import { SellOrders } from '@/components/SellOrders'
+import {
+  Tab,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+  Tabs
+} from '@nextui-org/react'
 
 function UserPanel () {
   return (
     <main className='flex flex-col justify-center min-h-screen gap-5 items-center'>
       <Tabs aria-label='options'>
         <Tab key='orders' title='Mis ordenes de compra'>
-          <h1>Something 1</h1>
+          <BuyOrders />
         </Tab>
         <Tab key='sales' title='Mis ordenes de venta'>
-          <h1>Something 2</h1>
+          <SellOrders />
         </Tab>
       </Tabs>
     </main>
