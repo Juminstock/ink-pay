@@ -209,6 +209,7 @@ function Home() {
           </TableColumn>
           <TableColumn key="action">ACCIÓN</TableColumn>
         </TableHeader>
+        {/* @ts-expect-error todo fix types */}
         <TableBody items={items} loadingContent={<Spinner />}>
           {(item) => (
             <TableRow key={item.id} accessKey={item.id.toString()}>

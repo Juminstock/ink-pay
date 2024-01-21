@@ -28,7 +28,7 @@ function MakeIntent() {
   });
   const navigate = useNavigate();
   const { depositId } = useParams();
-  const { orders, pricing, totalGHO } = mockHookOnRamp();
+  const { orders, totalGHO } = mockHookOnRamp();
   const { getDepositData: depositData } = useGetDeposit(
     parseInt(depositId as string)
   );
