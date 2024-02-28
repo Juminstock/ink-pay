@@ -36,7 +36,14 @@
     "ramper": {
       "name": "ramper",
       "moduleName": "ramper",
-      "deployments": []
+      "deployments": [
+        {
+          "timestamp": 1709096929015,
+          "address": "5CYWjTDyTKtyoGZLwSXRutHEm7PS24k7CMFULmjNvJkCofTJ",
+          "networkUrl": "ws://127.0.0.1:9944",
+          "deployerAlias": "alice"
+        }
+      ]
     }
   }
 }

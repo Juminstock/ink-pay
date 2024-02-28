@@ -1,18 +1,6 @@
-[2024-02-23 00:02:00] info:
-     Running command: CompileContract
-      Args: {"contractName":"ramper"}
-      Flags: {"release":false,"all":false}
-      Full command: ["/Users/juminstock/.nvm/versions/node/v18.19.1/bin/node","/Users/juminstock/.nvm/versions/node/v18.19.1/bin/swanky","contract","compile","ramper"]
-================================================================================
-[2024-02-23 00:02:00] info:
-     Started compiling contract [ramper]
-================================================================================
-[2024-02-23 00:02:00] info:
-     "Looking for contract ramper in path: [/Users/juminstock/Documents/projects/ink-pay/server/contracts/ramper]
-================================================================================
-[2024-02-23 00:02:00] info:
-     Running compile command: [["cargo","contract","build","--manifest-path","/Users/juminstock/Documents/projects/ink-pay/server/contracts/ramper/Cargo.toml"]]
-================================================================================
-[2024-02-23 00:02:39] info:
-     Contract ramper compilation done.
+[2024-02-27 23:10:38] info:
+     Running command: Tx
+      Args: {"contractName":"ramper","messageName":"flip"}
+      Flags: {"params":[],"account":"alice"}
+      Full command: ["/Users/juminstock/.nvm/versions/node/v18.19.1/bin/node","/Users/juminstock/.nvm/versions/node/v18.19.1/bin/swanky","contract","tx","ramper","flip","-a","alice"]
 ================================================================================

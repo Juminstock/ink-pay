@@ -23,10 +23,10 @@ export default class Constructors {
 	/**
 	* new
 	*
-	* @param { string } initValue,
+	* @param { boolean } newVar,
 	*/
    	async "new" (
-		initValue: string,
+		newVar: boolean,
 		__options ? : ConstructorOptions,
    	) {
    		const __contract = JSON.parse(ContractFile);
@@ -34,35 +34,7 @@ export default class Constructors {
 		const gasLimit = (await _genValidGasLimitAndValue(this.nativeAPI, __options)).gasLimit as WeightV2;
 
 		const storageDepositLimit = __options?.storageDepositLimit;
-			const tx = code.tx["new"]!({ gasLimit, storageDepositLimit, value: __options?.value }, initValue);
-			let response;
-
-			try {
-				response = await _signAndSend(this.nativeAPI.registry, tx, this.signer, (event: any) => event);
-			}
-			catch (error) {
-				console.log(error);
-			}
-
-		return {
-			result: response as SignAndSendSuccessResponse,
-			// @ts-ignore
-			address: (response as SignAndSendSuccessResponse)!.result!.contract.address.toString(),
-		};
-	}
-	/**
-	* default
-	*
-	*/
-   	async "default" (
-		__options ? : ConstructorOptions,
-   	) {
-   		const __contract = JSON.parse(ContractFile);
-		const code = new CodePromise(this.nativeAPI, __contract, __contract.source.wasm);
-		const gasLimit = (await _genValidGasLimitAndValue(this.nativeAPI, __options)).gasLimit as WeightV2;
-
-		const storageDepositLimit = __options?.storageDepositLimit;
-			const tx = code.tx["default"]!({ gasLimit, storageDepositLimit, value: __options?.value }, );
+			const tx = code.tx["new"]!({ gasLimit, storageDepositLimit, value: __options?.value }, newVar);
 			let response;
 
 			try {

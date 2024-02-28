@@ -1,6 +1,6 @@
 {
   "source": {
-    "hash": "0x93e6c3b71f5010bd9fc2c7ada66a65be43ac0baf019d862fdf4ab0f37366cfb2",
+    "hash": "0x332e57f88096153b0b2abb76fac4c2318894608ebf0e37b30598105d69d8e5d0",
     "language": "ink! 4.3.0",
     "compiler": "rustc 1.69.0",
     "build_info": {
@@ -25,19 +25,17 @@
       {
         "args": [
           {
-            "label": "init_value",
+            "label": "new_var",
             "type": {
               "displayName": [
-                "String"
+                "bool"
               ],
               "type": 0
             }
           }
         ],
         "default": false,
-        "docs": [
-          "Creates a new greeter contract initialized with the given value."
-        ],
+        "docs": [],
         "label": "new",
         "payable": false,
         "returnType": {
@@ -48,23 +46,6 @@
           "type": 1
         },
         "selector": "0x9bae9d5e"
-      },
-      {
-        "args": [],
-        "default": false,
-        "docs": [
-          "Creates a new greeter contract initialized to 'Hello ink!'."
-        ],
-        "label": "default",
-        "payable": false,
-        "returnType": {
-          "displayName": [
-            "ink_primitives",
-            "ConstructorResult"
-          ],
-          "type": 1
-        },
-        "selector": "0xed4b9d1b"
       }
     ],
     "docs": [],
@@ -73,70 +54,41 @@
         "displayName": [
           "AccountId"
         ],
-        "type": 6
+        "type": 5
       },
       "balance": {
         "displayName": [
           "Balance"
         ],
-        "type": 9
+        "type": 8
       },
       "blockNumber": {
         "displayName": [
           "BlockNumber"
         ],
-        "type": 12
+        "type": 11
       },
       "chainExtension": {
         "displayName": [
           "ChainExtension"
         ],
-        "type": 13
+        "type": 12
       },
       "hash": {
         "displayName": [
           "Hash"
         ],
-        "type": 10
+        "type": 9
       },
       "maxEventTopics": 4,
       "timestamp": {
         "displayName": [
           "Timestamp"
         ],
-        "type": 11
+        "type": 10
       }
     },
-    "events": [
-      {
-        "args": [
-          {
-            "docs": [],
-            "indexed": false,
-            "label": "from",
-            "type": {
-              "displayName": [
-                "Option"
-              ],
-              "type": 5
-            }
-          },
-          {
-            "docs": [],
-            "indexed": false,
-            "label": "message",
-            "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 0
-            }
-          }
-        ],
-        "docs": [],
-        "label": "Greeted"
-      }
-    ],
+    "events": [],
     "lang_error": {
       "displayName": [
         "ink",
@@ -148,38 +100,8 @@
       {
         "args": [],
         "default": false,
-        "docs": [
-          " Returns the current value of `message`."
-        ],
-        "label": "greet",
-        "mutates": false,
-        "payable": false,
-        "returnType": {
-          "displayName": [
-            "ink",
-            "MessageResult"
-          ],
-          "type": 4
-        },
-        "selector": "0x052cda08"
-      },
-      {
-        "args": [
-          {
-            "label": "new_value",
-            "type": {
-              "displayName": [
-                "String"
-              ],
-              "type": 0
-            }
-          }
-        ],
-        "default": false,
-        "docs": [
-          " Sets `message` to the given value."
-        ],
-        "label": "set_message",
+        "docs": [],
+        "label": "flip",
         "mutates": true,
         "payable": false,
         "returnType": {
@@ -189,7 +111,23 @@
           ],
           "type": 1
         },
-        "selector": "0x1fe7426f"
+        "selector": "0x633aa551"
+      },
+      {
+        "args": [],
+        "default": false,
+        "docs": [],
+        "label": "get",
+        "mutates": false,
+        "payable": false,
+        "returnType": {
+          "displayName": [
+            "ink",
+            "MessageResult"
+          ],
+          "type": 4
+        },
+        "selector": "0x2f865bd9"
       }
     ]
   },
@@ -205,10 +143,10 @@
                   "ty": 0
                 }
               },
-              "name": "message"
+              "name": "var"
             }
           ],
-          "name": "Greeter"
+          "name": "RamperVariables"
         }
       },
       "root_key": "0x00000000"
@@ -219,7 +157,7 @@
       "id": 0,
       "type": {
         "def": {
-          "primitive": "str"
+          "primitive": "bool"
         }
       }
     },
@@ -338,43 +276,10 @@
       "id": 5,
       "type": {
         "def": {
-          "variant": {
-            "variants": [
-              {
-                "index": 0,
-                "name": "None"
-              },
-              {
-                "fields": [
-                  {
-                    "type": 6
-                  }
-                ],
-                "index": 1,
-                "name": "Some"
-              }
-            ]
-          }
-        },
-        "params": [
-          {
-            "name": "T",
-            "type": 6
-          }
-        ],
-        "path": [
-          "Option"
-        ]
-      }
-    },
-    {
-      "id": 6,
-      "type": {
-        "def": {
           "composite": {
             "fields": [
               {
-                "type": 7,
+                "type": 6,
                 "typeName": "[u8; 32]"
               }
             ]
@@ -388,18 +293,18 @@
       }
     },
     {
-      "id": 7,
+      "id": 6,
       "type": {
         "def": {
           "array": {
             "len": 32,
-            "type": 8
+            "type": 7
           }
         }
       }
     },
     {
-      "id": 8,
+      "id": 7,
       "type": {
         "def": {
           "primitive": "u8"
@@ -407,7 +312,7 @@
       }
     },
     {
-      "id": 9,
+      "id": 8,
       "type": {
         "def": {
           "primitive": "u128"
@@ -415,13 +320,13 @@
       }
     },
     {
-      "id": 10,
+      "id": 9,
       "type": {
         "def": {
           "composite": {
             "fields": [
               {
-                "type": 7,
+                "type": 6,
                 "typeName": "[u8; 32]"
               }
             ]
@@ -435,7 +340,7 @@
       }
     },
     {
-      "id": 11,
+      "id": 10,
       "type": {
         "def": {
           "primitive": "u64"
@@ -443,7 +348,7 @@
       }
     },
     {
-      "id": 12,
+      "id": 11,
       "type": {
         "def": {
           "primitive": "u32"
@@ -451,7 +356,7 @@
       }
     },
     {
-      "id": 13,
+      "id": 12,
       "type": {
         "def": {
           "variant": {}

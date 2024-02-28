@@ -30,27 +30,25 @@ export default class Methods {
 	}
 
 	/**
-	* greet
+	* flip
 	*
-	* @returns { Result<string, ReturnTypes.LangError> }
+	* @returns { Result<null, ReturnTypes.LangError> }
 	*/
-	"greet" (
+	"flip" (
 		__options ? : GasLimit,
-	): Promise< QueryReturnType< Result<string, ReturnTypes.LangError> > >{
-		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "greet", [], __options , (result) => { return handleReturnType(result, getTypeDescription(4, DATA_TYPE_DESCRIPTIONS)); });
+	): Promise< QueryReturnType< Result<null, ReturnTypes.LangError> > >{
+		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "flip", [], __options , (result) => { return handleReturnType(result, getTypeDescription(1, DATA_TYPE_DESCRIPTIONS)); });
 	}
 
 	/**
-	* setMessage
+	* get
 	*
-	* @param { string } newValue,
-	* @returns { Result<null, ReturnTypes.LangError> }
+	* @returns { Result<boolean, ReturnTypes.LangError> }
 	*/
-	"setMessage" (
-		newValue: string,
+	"get" (
 		__options ? : GasLimit,
-	): Promise< QueryReturnType< Result<null, ReturnTypes.LangError> > >{
-		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "setMessage", [newValue], __options , (result) => { return handleReturnType(result, getTypeDescription(1, DATA_TYPE_DESCRIPTIONS)); });
+	): Promise< QueryReturnType< Result<boolean, ReturnTypes.LangError> > >{
+		return queryOkJSON( this.__apiPromise, this.__nativeContract, this.__callerAddress, "get", [], __options , (result) => { return handleReturnType(result, getTypeDescription(4, DATA_TYPE_DESCRIPTIONS)); });
 	}
 
 }

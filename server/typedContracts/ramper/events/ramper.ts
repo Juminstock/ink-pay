@@ -17,20 +17,6 @@ export default class EventsClass {
 		this.__api = api;
 	}
 
-	public subscribeOnGreetedEvent(callback : (event : EventTypes.Greeted) => void) {
-		const callbackWrapper = (args: any[], event: any) => {
-			const _event: Record < string, any > = {};
-
-			for (let i = 0; i < args.length; i++) {
-				_event[event.args[i]!.name] = args[i]!.toJSON();
-			}
-
-			callback(handleEventReturn(_event, getEventTypeDescription('Greeted', EVENT_DATA_TYPE_DESCRIPTIONS)) as EventTypes.Greeted);
-		};
-
-		return this.__subscribeOnEvent(callbackWrapper, (eventName : string) => eventName == 'Greeted');
-	}
-
 
 	private __subscribeOnEvent(
 		callback : (args: any[], event: any) => void,

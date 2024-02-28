@@ -21,25 +21,23 @@ export default class Methods {
 		this.__apiPromise = apiPromise;
 	}
 	/**
-	 * greet
+	 * flip
 	 *
 	*/
-	"greet" (
+	"flip" (
 		__options: GasLimit,
 	){
-		return buildSubmittableExtrinsic( this.__apiPromise, this.__nativeContract, "greet", [], __options);
+		return buildSubmittableExtrinsic( this.__apiPromise, this.__nativeContract, "flip", [], __options);
 	}
 
 	/**
-	 * setMessage
+	 * get
 	 *
-	 * @param { string } newValue,
 	*/
-	"setMessage" (
-		newValue: string,
+	"get" (
 		__options: GasLimit,
 	){
-		return buildSubmittableExtrinsic( this.__apiPromise, this.__nativeContract, "setMessage", [newValue], __options);
+		return buildSubmittableExtrinsic( this.__apiPromise, this.__nativeContract, "get", [], __options);
 	}
 
 }
