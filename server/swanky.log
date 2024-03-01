@@ -1,6 +1,0 @@
-[2024-02-27 23:10:38] info:
-     Running command: Tx
-      Args: {"contractName":"ramper","messageName":"flip"}
-      Flags: {"params":[],"account":"alice"}
-      Full command: ["/Users/juminstock/.nvm/versions/node/v18.19.1/bin/node","/Users/juminstock/.nvm/versions/node/v18.19.1/bin/swanky","contract","tx","ramper","flip","-a","alice"]
-================================================================================
